@@ -331,13 +331,13 @@
           <div class="w-12 h-12 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 flex items-center justify-center mb-6 group-hover:scale-110 group-hover:border-emerald-400 transition-all duration-300">
             <i data-lucide="database" class="w-6 h-6"></i>
           </div>
-          <h3 class="text-xl font-heading font-bold text-white mb-3">Modernização & Integrações de APIs</h3>
+          <h3 class="text-xl font-heading font-bold text-white mb-3">Modernização & Otimização de Bancos de Dados</h3>
           <p class="text-slate-400 text-sm leading-relaxed mb-6">
-            Seu software legado trava ou não conversa com nada? Conectamos gateways de pagamento, CRMs, APIs bancárias e modernizamos bancos de dados.
+            Modernizamos softwares antigos e lentos, refatorando arquiteturas, otimizando consultas e criando interfaces modernas com alta estabilidade.
           </p>
           <div class="text-xs font-medium text-emerald-300 flex items-center gap-1.5 pt-4 border-t border-white/5">
             <i data-lucide="check-circle" class="w-4 h-4 text-emerald-400"></i>
-            Conexão fluida entre ferramentas
+            Estruturas rápidas e escaláveis
           </div>
         </div>
 
@@ -586,23 +586,23 @@
             </div>
           </div>
 
-          <!-- Módulos Opcionais (Sem WhatsApp Bots) -->
+          <!-- Módulos Opcionais Validados -->
           <div>
             <label class="block text-sm font-semibold text-slate-200 mb-3 font-heading">
               3. Recursos adicionais do projeto:
             </label>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <label class="flex items-center gap-3 p-3.5 rounded-xl border border-white/5 bg-black/30 cursor-pointer hover:border-white/20">
-                <input type="checkbox" id="chk_notificacoes" value="Notificações Automáticas (E-mail / Sistema)" class="rounded text-nerty-cyan focus:ring-nerty-cyan" onchange="runSimulation()">
-                <span class="text-sm text-slate-300">Notificações e Alertas Automáticos</span>
+                <input type="checkbox" id="chk_estoque" value="Controle de Estoque & Peças / Materiais" class="rounded text-nerty-cyan focus:ring-nerty-cyan" onchange="runSimulation()">
+                <span class="text-sm text-slate-300">Controle de Estoque & Peças / Produtos</span>
               </label>
               <label class="flex items-center gap-3 p-3.5 rounded-xl border border-white/5 bg-black/30 cursor-pointer hover:border-white/20">
-                <input type="checkbox" id="chk_pagamento" value="Pagamentos Integrados (PIX / Cartão)" class="rounded text-nerty-cyan focus:ring-nerty-cyan" onchange="runSimulation()">
-                <span class="text-sm text-slate-300">Pagamento Integrado (PIX / Cartão)</span>
+                <input type="checkbox" id="chk_notificacoes" value="Alertas & Notificações do Sistema" class="rounded text-nerty-cyan focus:ring-nerty-cyan" onchange="runSimulation()">
+                <span class="text-sm text-slate-300">Alertas e Notificações do Sistema</span>
               </label>
               <label class="flex items-center gap-3 p-3.5 rounded-xl border border-white/5 bg-black/30 cursor-pointer hover:border-white/20">
                 <input type="checkbox" id="chk_permissoes" value="Perfis de Usuários & Níveis de Acesso" class="rounded text-nerty-cyan focus:ring-nerty-cyan" onchange="runSimulation()">
-                <span class="text-sm text-slate-300">Perfis de Usuários & Permissões</span>
+                <span class="text-sm text-slate-300">Perfis de Usuários & Níveis de Acesso</span>
               </label>
               <label class="flex items-center gap-3 p-3.5 rounded-xl border border-white/5 bg-black/30 cursor-pointer hover:border-white/20">
                 <input type="checkbox" id="chk_relatorios" value="Relatórios Avançados & Exportação PDF/Excel" class="rounded text-nerty-cyan focus:ring-nerty-cyan" onchange="runSimulation()">
@@ -698,10 +698,10 @@
       const scope = document.querySelector('input[name="sim_scope"]:checked').value;
       
       const modules = [];
-      if (document.getElementById('chk_notificacoes').checked) modules.push("Alertas & Notificações Automáticas");
-      if (document.getElementById('chk_pagamento').checked) modules.push("Pagamentos (PIX / Cartão)");
+      if (document.getElementById('chk_estoque').checked) modules.push("Controle de Estoque & Peças");
+      if (document.getElementById('chk_notificacoes').checked) modules.push("Alertas & Notificações do Sistema");
       if (document.getElementById('chk_permissoes').checked) modules.push("Perfis de Usuários & Permissões");
-      if (document.getElementById('chk_relatorios').checked) modules.push("Relatórios & Dashboards");
+      if (document.getElementById('chk_relatorios').checked) modules.push("Relatórios & Exportação PDF/Excel");
 
       const modulesText = modules.length > 0 ? modules.join(", ") : "A definir no alinhamento";
 
