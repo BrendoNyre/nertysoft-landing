@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#080b10">
+  <title>NertySoft | Sua ideia de sistema fora do papel com inteligência e performance</title>
+  <meta name="description" content="NertySoft — Desenvolvimento de software, plataformas web, automações com IA e sistemas sob medida. Do esboço à implantação completa.">
+
+  <!-- Google Fonts: Sora, Plus Jakarta Sans & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Sora:wght@400;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            heading: ['"Sora"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          },
+          colors: {
+            nerty: {
+              bg: '#080b10',
+              surface: '#0d1219',
+              card: '#121822',
+              cardBorder: 'rgba(255, 255, 255, 0.08)',
+              cyan: '#3df2e0',
+              cyanGlow: 'rgba(61, 242, 224, 0.15)',
+              indigo: '#6366f1',
+              violet: '#8b5cf6',
+              amber: '#ffb347',
+              gray: '#94a3b8',
+              muted: '#64748b'
+            }
+          },
+          animation: {
+            'glow-slow': 'glowSlow 8s ease-in-out infinite',
+            'float': 'float 5s ease-in-out infinite',
+            'float-delayed': 'float 5s ease-in-out 2.5s infinite',
+            'pulse-subtle': 'pulseSubtle 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+          },
+          keyframes: {
+            glowSlow: {
+              '0%, 100%': { opacity: '0.4', transform: 'scale(1)' },
+              '50%': { opacity: '0.75', transform: 'scale(1.12)' },
+            },
+            float: {
+              '0%, 100%': { transform: 'translateY(0px)' },
+              '50%': { transform: 'translateY(-10px)' },
+            },
+            pulseSubtle: {
+              '0%, 100%': { opacity: '1', transform: 'scale(1)' },
+              '50%': { opacity: '0.6', transform: 'scale(0.98)' },
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Fundo escuro limpo com iluminação sutil (sem qualquer grade ou quadriculado) */
+    body {
+      background-color: #080b10;
+      background-image: 
+        radial-gradient(circle at 50% 0%, rgba(99, 102, 241, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 100% 40%, rgba(61, 242, 224, 0.06) 0%, transparent 40%),
+        radial-gradient(circle at 0% 80%, rgba(139, 92, 246, 0.06) 0%, transparent 40%);
+      color: #f1f5f9;
+      min-height: 100vh;
+    }
+
+    /* Card com glassmorphism e borda luminosa */
+    .glass-card {
+      background: linear-gradient(135deg, rgba(18, 24, 34, 0.75) 0%, rgba(13, 18, 25, 0.9) 100%);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .glass-card:hover {
+      border-color: rgba(61, 242, 224, 0.35);
+      box-shadow: 0 10px 35px -10px rgba(61, 242, 224, 0.12);
+      transform: translateY(-3px);
+    }
+
+    /* Animação suave de entrada */
+    .reveal-item {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .reveal-item.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Gradient Text */
+    .text-gradient {
+      background: linear-gradient(135deg, #ffffff 20%, #cbd5e1 50%, #3df2e0 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .text-gradient-cyan {
+      background: linear-gradient(135deg, #3df2e0 0%, #6366f1 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+  </style>
+</head>
+<body class="text-slate-100 font-sans antialiased selection:bg-cyan-500/30 selection:text-cyan-200 min-h-screen flex flex-col">
+
+  <!-- Glows Ambientais no Topo -->
+  <div class="fixed top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[450px] bg-gradient-to-b from-indigo-600/15 via-cyan-500/10 to-transparent blur-[140px] pointer-events-none -z-10 animate-glow-slow"></div>
+
+  <!-- Header / Navbar Flutuante com Glassmorphism -->
+  <header class="sticky top-4 z-50 max-w-7xl mx-auto px-4 sm:px-6 w-full">
+    <div class="glass-card rounded-2xl px-5 py-3.5 flex items-center justify-between shadow-2xl shadow-black/60 border border-white/10">
+      
+      <!-- Brand Logo -->
+      <a href="#" class="flex items-center gap-3 group">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-cyan-400 via-indigo-500 to-violet-600 p-[1.5px] shadow-lg shadow-cyan-500/20 group-hover:shadow-cyan-500/40 transition-all duration-300">
+          <div class="w-full h-full bg-nerty-bg rounded-[10px] flex items-center justify-center">
+            <i data-lucide="layers" class="w-5 h-5 text-nerty-cyan group-hover:rotate-12 transition-transform duration-300"></i>
+          </div>
+        </div>
+        <div class="flex flex-col">
+          <span class="font-heading font-extrabold text-lg tracking-tight text-white flex items-center gap-1.5">
+            NertySoft
+            <span class="inline-block w-2 h-2 rounded-full bg-nerty-cyan animate-pulse"></span>
+          </span>
+          <span class="text-[10px] text-nerty-gray tracking-wider uppercase font-medium -mt-1">Software & IA Sob Medida</span>
+        </div>
+      </a>
+
+      <!-- Menu Links -->
+      <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-slate-300">
+        <a href="#servicos" class="hover:text-nerty-cyan transition-colors">O Que Criamos</a>
+        <a href="#metodologia" class="hover:text-nerty-cyan transition-colors">Como Trabalhamos</a>
+        <a href="#cases" class="hover:text-nerty-cyan transition-colors">Projetos & Cases</a>
+        <a href="#simulador" class="hover:text-nerty-cyan transition-colors">Simulador de Projeto</a>
+        <a href="#faq" class="hover:text-nerty-cyan transition-colors">Dúvidas</a>
+      </nav>
+
+      <!-- CTA WhatsApp -->
+      <div class="flex items-center gap-3">
+        <a id="btn-header-cta"
+           href="https://wa.me/5511999999999?text=Olá!%20Tenho%20uma%20ideia%20de%20projeto/sistema%20e%20gostaria%20de%20conversar."
+           target="_blank"
+           class="inline-flex items-center gap-2 bg-gradient-to-r from-nerty-cyan to-indigo-500 hover:from-cyan-400 hover:to-indigo-400 text-slate-950 font-bold text-xs sm:text-sm px-4 sm:px-5 py-2.5 rounded-xl shadow-lg shadow-cyan-500/20 hover:shadow-cyan-500/40 transition-all transform hover:-translate-y-0.5">
+          <i data-lucide="message-circle" class="w-4 h-4"></i>
+          <span>Falar no WhatsApp</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="relative pt-16 sm:pt-24 pb-24 sm:pb-32 overflow-hidden">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+      
+      <!-- Pill Badge -->
+      <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass-card border-white/10 text-nerty-cyan text-xs font-semibold uppercase tracking-wider mb-8 shadow-inner">
+        <span class="w-2 h-2 rounded-full bg-nerty-cyan animate-ping"></span>
+        <span>Consultoria, Sistemas & Automação Inteligente</span>
+      </div>
+
+      <!-- Main Headline -->
+      <h1 class="text-4xl sm:text-6xl lg:text-7xl font-heading font-extrabold tracking-tight text-white max-w-5xl mx-auto leading-[1.1] sm:leading-[1.12]">
+        Sua ideia de sistema, <br class="hidden sm:inline">
+        <span class="text-gradient">fora do papel com IA e agilidade.</span>
+      </h1>
+
+      <!-- Subtitle -->
+      <p class="mt-6 text-base sm:text-xl text-slate-400 max-w-3xl mx-auto leading-relaxed">
+        Desenvolvemos sistemas de gestão sob medida, portais web, automações de processos e visão computacional para empresas que precisam de soluções personalizadas e eficientes.
+      </p>
+
+      <!-- Action Buttons -->
+      <div class="mt-10 flex flex-col sm:flex-row gap-4 justify-center items-center">
+        <a href="#simulador" class="w-full sm:w-auto inline-flex items-center justify-center gap-3 bg-nerty-cyan hover:bg-cyan-300 text-slate-950 font-bold px-8 py-4 rounded-xl shadow-xl shadow-cyan-500/20 hover:shadow-cyan-500/40 transition-all transform hover:-translate-y-0.5">
+          <i data-lucide="sparkles" class="w-5 h-5"></i>
+          <span>Simular Meu Projeto Agora</span>
+        </a>
+        <a href="#cases" class="w-full sm:w-auto inline-flex items-center justify-center gap-3 glass-card hover:bg-slate-800/80 text-slate-200 font-semibold px-8 py-4 rounded-xl transition-all">
+          <i data-lucide="folder-code" class="w-5 h-5 text-nerty-cyan"></i>
+          <span>Explorar Casos de Projetos</span>
+        </a>
+      </div>
+
+      <!-- Mini Live Dashboard / Mockup Card Flutuante -->
+      <div class="mt-16 sm:mt-20 max-w-4xl mx-auto glass-card rounded-3xl p-4 sm:p-6 shadow-2xl border border-white/10 relative overflow-hidden animate-float">
+        <div class="flex items-center justify-between border-b border-white/5 pb-4 mb-5">
+          <div class="flex items-center gap-2">
+            <span class="w-3 h-3 rounded-full bg-red-500/70 inline-block"></span>
+            <span class="w-3 h-3 rounded-full bg-yellow-500/70 inline-block"></span>
+            <span class="w-3 h-3 rounded-full bg-green-500/70 inline-block"></span>
+            <span class="text-xs font-mono text-slate-400 ml-3">nertysoft-terminal // production-ready</span>
+          </div>
+          <span class="text-xs font-mono text-nerty-cyan bg-nerty-cyan/10 px-2.5 py-1 rounded-full border border-nerty-cyan/20">
+            ● 99.9% Uptime
+          </span>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-left">
+          <div class="p-4 rounded-2xl bg-black/40 border border-white/5">
+            <span class="text-xs text-slate-400 font-medium">Arquitetura</span>
+            <p class="text-base font-bold text-white mt-1">Modular & Cloud</p>
+            <p class="text-[11px] text-nerty-cyan mt-1">Sem licenças abusivas</p>
+          </div>
+          <div class="p-4 rounded-2xl bg-black/40 border border-white/5">
+            <span class="text-xs text-slate-400 font-medium">Ciclo de Entrega</span>
+            <p class="text-base font-bold text-white mt-1">Protótipo em Dias</p>
+            <p class="text-[11px] text-emerald-400 mt-1">Validação contínua</p>
+          </div>
+          <div class="p-4 rounded-2xl bg-black/40 border border-white/5">
+            <span class="text-xs text-slate-400 font-medium">Propriedade Intelectual</span>
+            <p class="text-base font-bold text-white mt-1">100% Seu</p>
+            <p class="text-[11px] text-indigo-400 mt-1">Código fonte entregue</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- O Que Desenvolvemos (Serviços e Soluções) -->
+  <section id="servicos" class="py-24 relative border-t border-white/5 bg-slate-950/40">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center max-w-3xl mx-auto mb-16 reveal-item">
+        <span class="text-xs font-bold tracking-widest text-nerty-cyan uppercase font-mono">Áreas de Especialidade</span>
+        <h2 class="text-3xl sm:text-5xl font-heading font-extrabold text-white mt-2">
+          Construímos o software exato que a sua operação exige.
+        </h2>
+        <p class="text-slate-400 mt-4 text-sm sm:text-base">
+          De sistemas de gestão corporativos a ferramentas inteligentes com visão computacional e automações.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        
+        <!-- Card 1 -->
+        <div class="glass-card p-8 rounded-3xl relative overflow-hidden group reveal-item">
+          <div class="w-12 h-12 rounded-2xl bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 flex items-center justify-center mb-6 group-hover:scale-110 group-hover:border-indigo-400 transition-all duration-300">
+            <i data-lucide="layout-grid" class="w-6 h-6"></i>
+          </div>
+          <h3 class="text-xl font-heading font-bold text-white mb-3">Sistemas de Gestão & ERPs Sob Medida</h3>
+          <p class="text-slate-400 text-sm leading-relaxed mb-6">
+            Elimine retrabalho e planilhas desconexas com painéis operacionais feitos sob medida para ordens de serviço, estoque, fluxo de caixa e relatórios.
+          </p>
+          <div class="text-xs font-medium text-indigo-300 flex items-center gap-1.5 pt-4 border-t border-white/5">
+            <i data-lucide="check-circle" class="w-4 h-4 text-indigo-400"></i>
+            Adaptado ao seu fluxo diário
+          </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="glass-card p-8 rounded-3xl relative overflow-hidden group reveal-item">
+          <div class="w-12 h-12 rounded-2xl bg-cyan-500/10 border border-cyan-500/20 text-nerty-cyan flex items-center justify-center mb-6 group-hover:scale-110 group-hover:border-nerty-cyan transition-all duration-300">
+            <i data-lucide="laptop" class="w-6 h-6"></i>
+          </div>
+          <h3 class="text-xl font-heading font-bold text-white mb-3">Plataformas Web & Portais de Clientes</h3>
+          <p class="text-slate-400 text-sm leading-relaxed mb-6">
+            Áreas de membros, portais de autoatendimento, agendamento online 24h e plataformas SaaS completas para atender seus clientes com excelência.
+          </p>
+          <div class="text-xs font-medium text-cyan-300 flex items-center gap-1.5 pt-4 border-t border-white/5">
+            <i data-lucide="check-circle" class="w-4 h-4 text-nerty-cyan"></i>
+            100% responsivo para celular e desktop
+          </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="glass-card p-8 rounded-3xl relative overflow-hidden group reveal-item">
+          <div class="w-12 h-12 rounded-2xl bg-purple-500/10 border border-purple-500/20 text-purple-400 flex items-center justify-center mb-6 group-hover:scale-110 group-hover:border-purple-400 transition-all duration-300">
+            <i data-lucide="bot" class="w-6 h-6"></i>
+          </div>
+          <h3 class="text-xl font-heading font-bold text-white mb-3">Automações com IA & WhatsApp Bots</h3>
+          <p class="text-slate-400 text-sm leading-relaxed mb-6">
+            Disparo automático de mensagens, orçamentos em PDF direto no WhatsApp, cobranças automatizadas e fluxos com IA para atendimento e triagem.
+          </p>
+          <div class="text-xs font-medium text-purple-300 flex items-center gap-1.5 pt-4 border-t border-white/5">
+            <i data-lucide="check-circle" class="w-4 h-4 text-purple-400"></i>
+            Redução drástica de tempo de resposta
+          </div>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="glass-card p-8 rounded-3xl relative overflow-hidden group reveal-item">
+          <div class="w-12 h-12 rounded-2xl bg-pink-500/10 border border-pink-500/20 text-pink-400 flex items-center justify-center mb-6 group-hover:scale-110 group-hover:border-pink-400 transition-all duration-300">
+            <i data-lucide="camera" class="w-6 h-6"></i>
+          </div>
+          <h3 class="text-xl font-heading font-bold text-white mb-3">Visão Computacional & LPR (Placas)</h3>
+          <p class="text-slate-400 text-sm leading-relaxed mb-6">
+            Leitura e reconhecimento automático de placas em tempo real através de câmeras IP, controle de cancelas, registro de acessos e auditoria veicular.
+          </p>
+          <div class="text-xs font-medium text-pink-300 flex items-center gap-1.5 pt-4 border-t border-white/5">
+            <i data-lucide="check-circle" class="w-4 h-4 text-pink-400"></i>
+            Integração com hardware e câmeras
+          </div>
+        </div>
+
+        <!-- Card 5 -->
+        <div class="glass-card p-8 rounded-3xl relative overflow-hidden group reveal-item">
+          <div class="w-12 h-12 rounded-2xl bg-amber-500/10 border border-amber-500/20 text-amber-400 flex items-center justify-center mb-6 group-hover:scale-110 group-hover:border-amber-400 transition-all duration-300">
+            <i data-lucide="globe" class="w-6 h-6"></i>
+          </div>
+          <h3 class="text-xl font-heading font-bold text-white mb-3">Sites & Landing Pages de Alta Performance</h3>
+          <p class="text-slate-400 text-sm leading-relaxed mb-6">
+            Páginas de altíssima conversão com carregamento ultra veloz, design moderno e SEO avançado para converter visitantes em clientes qualificados.
+          </p>
+          <div class="text-xs font-medium text-amber-300 flex items-center gap-1.5 pt-4 border-t border-white/5">
+            <i data-lucide="check-circle" class="w-4 h-4 text-amber-400"></i>
+            Otimizado para o Google
+          </div>
+        </div>
+
+        <!-- Card 6 -->
+        <div class="glass-card p-8 rounded-3xl relative overflow-hidden group reveal-item">
+          <div class="w-12 h-12 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 flex items-center justify-center mb-6 group-hover:scale-110 group-hover:border-emerald-400 transition-all duration-300">
+            <i data-lucide="database" class="w-6 h-6"></i>
+          </div>
+          <h3 class="text-xl font-heading font-bold text-white mb-3">Modernização & Integrações de APIs</h3>
+          <p class="text-slate-400 text-sm leading-relaxed mb-6">
+            Seu software legado trava ou não conversa com nada? Conectamos gateways de pagamento, CRMs, APIs bancárias e modernizamos bancos de dados.
+          </p>
+          <div class="text-xs font-medium text-emerald-300 flex items-center gap-1.5 pt-4 border-t border-white/5">
+            <i data-lucide="check-circle" class="w-4 h-4 text-emerald-400"></i>
+            Conexão fluida entre ferramentas
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Metodologia (Como Trabalhamos) -->
+  <section id="metodologia" class="py-24 relative">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center max-w-3xl mx-auto mb-16 reveal-item">
+        <span class="text-xs font-bold tracking-widest text-nerty-cyan uppercase font-mono">Processo Transparente</span>
+        <h2 class="text-3xl sm:text-5xl font-heading font-extrabold text-white mt-2">
+          Do esboço ao sistema no ar sem complicação.
+        </h2>
+        <p class="text-slate-400 mt-4 text-sm sm:text-base">
+          Metodologia prática e focada no resultado do seu negócio.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+        
+        <!-- Passo 1 -->
+        <div class="glass-card p-6 rounded-3xl relative reveal-item">
+          <span class="text-3xl font-heading font-extrabold text-nerty-cyan/30">01</span>
+          <h4 class="text-lg font-heading font-bold text-white mt-2 mb-2">Diagnóstico & Escopo</h4>
+          <p class="text-xs text-slate-400 leading-relaxed">
+            Mapeamos o fluxo do seu negócio, identificamos gargalos e definimos os módulos indispensáveis para resolver seu problema.
+          </p>
+        </div>
+
+        <!-- Passo 2 -->
+        <div class="glass-card p-6 rounded-3xl relative reveal-item">
+          <span class="text-3xl font-heading font-extrabold text-indigo-400/30">02</span>
+          <h4 class="text-lg font-heading font-bold text-white mt-2 mb-2">Design & Fluxos</h4>
+          <p class="text-xs text-slate-400 leading-relaxed">
+            Estruturamos as telas de forma simples, moderna e intuitiva para que sua equipe aprenda a usar em minutos.
+          </p>
+        </div>
+
+        <!-- Passo 3 -->
+        <div class="glass-card p-6 rounded-3xl relative reveal-item">
+          <span class="text-3xl font-heading font-extrabold text-purple-400/30">03</span>
+          <h4 class="text-lg font-heading font-bold text-white mt-2 mb-2">Desenvolvimento com IA</h4>
+          <p class="text-xs text-slate-400 leading-relaxed">
+            Utilizamos ferramentas aceleradas por inteligência artificial para entregar um código limpo, seguro e em tempo recorde.
+          </p>
+        </div>
+
+        <!-- Passo 4 -->
+        <div class="glass-card p-6 rounded-3xl relative reveal-item">
+          <span class="text-3xl font-heading font-extrabold text-emerald-400/30">04</span>
+          <h4 class="text-lg font-heading font-bold text-white mt-2 mb-2">Implantação & Suporte</h4>
+          <p class="text-xs text-slate-400 leading-relaxed">
+            Colocamos o sistema em produção, treinamos seus colaboradores e oferecemos suporte contínuo diretamente pelo WhatsApp.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Cases de Projetos Realizados / Capacidades Técnicas -->
+  <section id="cases" class="py-24 border-t border-white/5 bg-slate-950/40 relative">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center max-w-3xl mx-auto mb-16 reveal-item">
+        <span class="text-xs font-bold tracking-widest text-indigo-400 uppercase font-mono">Portfólio & Capacidade Técnica</span>
+        <h2 class="text-3xl sm:text-5xl font-heading font-extrabold text-white mt-2">
+          Exemplos de Projetos que Desenvolvemos
+        </h2>
+        <p class="text-slate-400 mt-4 text-sm sm:text-base">
+          Conheça algumas das arquiteturas, regras de negócio e tecnologias que já implementamos na prática.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        
+        <!-- Case 1: LPR -->
+        <div class="glass-card p-8 rounded-3xl reveal-item">
+          <div class="flex items-center justify-between mb-4">
+            <span class="text-xs font-mono font-bold uppercase tracking-wider px-3 py-1 rounded-full bg-pink-500/10 text-pink-400 border border-pink-500/20">
+              Visão Computacional & Segurança
+            </span>
+            <i data-lucide="camera" class="w-5 h-5 text-slate-400"></i>
+          </div>
+          <h3 class="text-xl font-heading font-bold text-white mb-2">Sistema LPR de Reconhecimento Automático de Placas</h3>
+          <p class="text-slate-400 text-sm mb-6 leading-relaxed">
+            Solução de alta precisão para identificação em tempo real de placas (Mercosul e padrão antigo) a partir do fluxo de vídeo de câmeras IP, com liberação de cancelas e histórico de auditoria completo.
+          </p>
+          <div class="flex flex-wrap gap-2 pt-4 border-t border-white/5">
+            <span class="text-xs font-mono px-2.5 py-1 rounded-md bg-white/5 text-slate-300">Câmeras IP</span>
+            <span class="text-xs font-mono px-2.5 py-1 rounded-md bg-white/5 text-slate-300">Tempo Real</span>
+            <span class="text-xs font-mono px-2.5 py-1 rounded-md bg-white/5 text-slate-300">Controle de Acesso</span>
+          </div>
+        </div>
+
+        <!-- Case 2: ERP Oficina -->
+        <div class="glass-card p-8 rounded-3xl reveal-item">
+          <div class="flex items-center justify-between mb-4">
+            <span class="text-xs font-mono font-bold uppercase tracking-wider px-3 py-1 rounded-full bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">
+              Gestão Operacional & Financeira
+            </span>
+            <i data-lucide="wrench" class="w-5 h-5 text-slate-400"></i>
+          </div>
+          <h3 class="text-xl font-heading font-bold text-white mb-2">ERP Especializado para Oficinas & Auto Centers</h3>
+          <p class="text-slate-400 text-sm mb-6 leading-relaxed">
+            Painel web completo para emissão de Ordens de Serviço (OS), envio automático de orçamentos em PDF no WhatsApp do cliente, controle de peças e cálculo de comissões por mecânico.
+          </p>
+          <div class="flex flex-wrap gap-2 pt-4 border-t border-white/5">
+            <span class="text-xs font-mono px-2.5 py-1 rounded-md bg-white/5 text-slate-300">WhatsApp API</span>
+            <span class="text-xs font-mono px-2.5 py-1 rounded-md bg-white/5 text-slate-300">Gestão de OS</span>
+            <span class="text-xs font-mono px-2.5 py-1 rounded-md bg-white/5 text-slate-300">Comissões</span>
+          </div>
+        </div>
+
+        <!-- Case 3: Agendamentos -->
+        <div class="glass-card p-8 rounded-3xl reveal-item">
+          <div class="flex items-center justify-between mb-4">
+            <span class="text-xs font-mono font-bold uppercase tracking-wider px-3 py-1 rounded-full bg-cyan-500/10 text-nerty-cyan border border-cyan-500/20">
+              Autoatendimento & Mobile
+            </span>
+            <i data-lucide="calendar" class="w-5 h-5 text-slate-400"></i>
+          </div>
+          <h3 class="text-xl font-heading font-bold text-white mb-2">Plataforma de Agendamentos com Notificação Ativa</h3>
+          <p class="text-slate-400 text-sm mb-6 leading-relaxed">
+            Página de agendamento online intuitiva onde o cliente escolhe profissional e horário em segundos, com disparos automáticos de lembrete no WhatsApp para zerar o índice de faltas.
+          </p>
+          <div class="flex flex-wrap gap-2 pt-4 border-t border-white/5">
+            <span class="text-xs font-mono px-2.5 py-1 rounded-md bg-white/5 text-slate-300">Lembretes WhatsApp</span>
+            <span class="text-xs font-mono px-2.5 py-1 rounded-md bg-white/5 text-slate-300">Multi-profissional</span>
+            <span class="text-xs font-mono px-2.5 py-1 rounded-md bg-white/5 text-slate-300">Relatórios</span>
+          </div>
+        </div>
+
+        <!-- Case 4: PDV & Varejo -->
+        <div class="glass-card p-8 rounded-3xl reveal-item">
+          <div class="flex items-center justify-between mb-4">
+            <span class="text-xs font-mono font-bold uppercase tracking-wider px-3 py-1 rounded-full bg-amber-500/10 text-amber-400 border border-amber-500/20">
+              Varejo & Estoque
+            </span>
+            <i data-lucide="shopping-cart" class="w-5 h-5 text-slate-400"></i>
+          </div>
+          <h3 class="text-xl font-heading font-bold text-white mb-2">Frente de Caixa (PDV) & Controle de Estoque Multi-unidade</h3>
+          <p class="text-slate-400 text-sm mb-6 leading-relaxed">
+            Frente de caixa rápida com leitor de código de barras, controle de estoque com aviso de reposição mínima e fechamento de caixa por operador.
+          </p>
+          <div class="flex flex-wrap gap-2 pt-4 border-t border-white/5">
+            <span class="text-xs font-mono px-2.5 py-1 rounded-md bg-white/5 text-slate-300">Frente de Caixa</span>
+            <span class="text-xs font-mono px-2.5 py-1 rounded-md bg-white/5 text-slate-300">Alerta de Estoque</span>
+            <span class="text-xs font-mono px-2.5 py-1 rounded-md bg-white/5 text-slate-300">Código de Barras</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Simulador Interativo de Projetos Sob Medida -->
+  <section id="simulador" class="py-24 relative">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center mb-12 reveal-item">
+        <span class="text-xs font-bold tracking-widest text-nerty-cyan uppercase font-mono">Diagnóstico Inicial</span>
+        <h2 class="text-3xl sm:text-5xl font-heading font-extrabold text-white mt-2">
+          Simulador de Projeto Sob Medida
+        </h2>
+        <p class="text-slate-400 mt-2 text-sm">
+          Escolha os parâmetros do que você precisa e monte um resumo para alinharmos pelo WhatsApp.
+        </p>
+      </div>
+
+      <div class="glass-card rounded-3xl p-6 sm:p-10 shadow-2xl relative border-white/10 reveal-item">
+        <div class="space-y-6">
+          
+          <!-- Tipo de Projeto -->
+          <div>
+            <label class="block text-sm font-semibold text-slate-200 mb-3 font-heading">
+              1. Qual o tipo de solução que você quer criar?
+            </label>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <label class="flex items-center gap-3 p-4 rounded-xl border border-white/10 bg-black/40 cursor-pointer hover:border-nerty-cyan transition-colors">
+                <input type="radio" name="sim_type" value="Sistema de Gestão / ERP Interno" class="text-nerty-cyan focus:ring-nerty-cyan" checked onchange="runSimulation()">
+                <div>
+                  <p class="font-medium text-white text-sm">Sistema de Gestão / ERP Interno</p>
+                  <p class="text-xs text-slate-400">Ordens de serviço, finanças e estoque</p>
+                </div>
+              </label>
+
+              <label class="flex items-center gap-3 p-4 rounded-xl border border-white/10 bg-black/40 cursor-pointer hover:border-nerty-cyan transition-colors">
+                <input type="radio" name="sim_type" value="Plataforma Web / Portal de Clientes" class="text-nerty-cyan focus:ring-nerty-cyan" onchange="runSimulation()">
+                <div>
+                  <p class="font-medium text-white text-sm">Plataforma Web / Portal de Clientes</p>
+                  <p class="text-xs text-slate-400">Área de membros, agendamentos, SaaS</p>
+                </div>
+              </label>
+
+              <label class="flex items-center gap-3 p-4 rounded-xl border border-white/10 bg-black/40 cursor-pointer hover:border-nerty-cyan transition-colors">
+                <input type="radio" name="sim_type" value="Automação, IA ou Visão Computacional" class="text-nerty-cyan focus:ring-nerty-cyan" onchange="runSimulation()">
+                <div>
+                  <p class="font-medium text-white text-sm">Automação, IA ou Visão Computacional</p>
+                  <p class="text-xs text-slate-400">Bots WhatsApp, LPR, APIs integradas</p>
+                </div>
+              </label>
+
+              <label class="flex items-center gap-3 p-4 rounded-xl border border-white/10 bg-black/40 cursor-pointer hover:border-nerty-cyan transition-colors">
+                <input type="radio" name="sim_type" value="Site Institucional / Landing Page" class="text-nerty-cyan focus:ring-nerty-cyan" onchange="runSimulation()">
+                <div>
+                  <p class="font-medium text-white text-sm">Site Institucional / Landing Page</p>
+                  <p class="text-xs text-slate-400">Alta performance e foco em conversão</p>
+                </div>
+              </label>
+            </div>
+          </div>
+
+          <!-- Escopo / Complexidade -->
+          <div>
+            <label class="block text-sm font-semibold text-slate-200 mb-3 font-heading">
+              2. Porte ou complexidade inicial desejada:
+            </label>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              <label class="flex items-center gap-3 p-3.5 rounded-xl border border-white/10 bg-black/40 cursor-pointer hover:border-white/20">
+                <input type="radio" name="sim_scope" value="Compacto / MVP Inicial" class="text-nerty-cyan focus:ring-nerty-cyan" checked onchange="runSimulation()">
+                <div>
+                  <p class="text-sm font-medium text-white">Compacto / MVP</p>
+                  <p class="text-xs text-slate-400">Funcionalidades essenciais</p>
+                </div>
+              </label>
+
+              <label class="flex items-center gap-3 p-3.5 rounded-xl border border-white/10 bg-black/40 cursor-pointer hover:border-white/20">
+                <input type="radio" name="sim_scope" value="Completo / Padrão com Múltiplos Módulos" class="text-nerty-cyan focus:ring-nerty-cyan" onchange="runSimulation()">
+                <div>
+                  <p class="text-sm font-medium text-white">Completo / Padrão</p>
+                  <p class="text-xs text-slate-400">Múltiplos módulos e telas</p>
+                </div>
+              </label>
+
+              <label class="flex items-center gap-3 p-3.5 rounded-xl border border-white/10 bg-black/40 cursor-pointer hover:border-white/20">
+                <input type="radio" name="sim_scope" value="Avançado / Enterprise" class="text-nerty-cyan focus:ring-nerty-cyan" onchange="runSimulation()">
+                <div>
+                  <p class="text-sm font-medium text-white">Avançado / Enterprise</p>
+                  <p class="text-xs text-slate-400">Alto volume e integrações</p>
+                </div>
+              </label>
+            </div>
+          </div>
+
+          <!-- Módulos Opcionais -->
+          <div>
+            <label class="block text-sm font-semibold text-slate-200 mb-3 font-heading">
+              3. Recursos adicionais do projeto:
+            </label>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <label class="flex items-center gap-3 p-3.5 rounded-xl border border-white/5 bg-black/30 cursor-pointer hover:border-white/20">
+                <input type="checkbox" id="chk_whatsapp" value="WhatsApp Bot / Notificações" class="rounded text-nerty-cyan focus:ring-nerty-cyan" onchange="runSimulation()">
+                <span class="text-sm text-slate-300">Integração WhatsApp Bot</span>
+              </label>
+              <label class="flex items-center gap-3 p-3.5 rounded-xl border border-white/5 bg-black/30 cursor-pointer hover:border-white/20">
+                <input type="checkbox" id="chk_pagamento" value="Pagamentos Integrados (PIX/Cartão)" class="rounded text-nerty-cyan focus:ring-nerty-cyan" onchange="runSimulation()">
+                <span class="text-sm text-slate-300">Pagamento PIX / Cartão</span>
+              </label>
+              <label class="flex items-center gap-3 p-3.5 rounded-xl border border-white/5 bg-black/30 cursor-pointer hover:border-white/20">
+                <input type="checkbox" id="chk_permissoes" value="Perfis de Usuários & Níveis de Acesso" class="rounded text-nerty-cyan focus:ring-nerty-cyan" onchange="runSimulation()">
+                <span class="text-sm text-slate-300">Perfis de Usuários & Permissões</span>
+              </label>
+              <label class="flex items-center gap-3 p-3.5 rounded-xl border border-white/5 bg-black/30 cursor-pointer hover:border-white/20">
+                <input type="checkbox" id="chk_relatorios" value="Relatórios Avançados & BI" class="rounded text-nerty-cyan focus:ring-nerty-cyan" onchange="runSimulation()">
+                <span class="text-sm text-slate-300">Relatórios Avançados & Dashboards</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Caixa de Ação -->
+          <div class="pt-6 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-6 bg-cyan-950/20 p-6 rounded-2xl border border-cyan-500/20">
+            <div>
+              <p class="text-xs text-nerty-cyan uppercase font-mono font-bold">Diagnóstico Sem Compromisso</p>
+              <p class="text-base sm:text-lg font-heading font-bold text-white mt-0.5">Pronto para detalhar sua ideia?</p>
+              <p class="text-xs text-slate-400">Enviaremos uma análise técnica e proposta customizada.</p>
+            </div>
+
+            <a id="btn-sim-whatsapp" href="#" target="_blank" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-nerty-cyan hover:bg-cyan-300 text-slate-950 font-bold px-6 py-3.5 rounded-xl shadow-lg shadow-cyan-500/25 transition-all">
+              <i data-lucide="send" class="w-4 h-4"></i>
+              <span>Validar Projeto no WhatsApp</span>
+            </a>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq" class="py-24 border-t border-white/5 bg-slate-950/40 relative">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center mb-16 reveal-item">
+        <span class="text-xs font-bold tracking-widest text-nerty-cyan uppercase font-mono">Dúvidas Frequentes</span>
+        <h2 class="text-3xl sm:text-4xl font-heading font-extrabold text-white mt-2">
+          Perguntas Comuns
+        </h2>
+      </div>
+
+      <div class="space-y-4">
+        <div class="glass-card rounded-2xl p-6 reveal-item">
+          <h3 class="text-base font-heading font-bold text-white">Como funciona o desenvolvimento sob medida com a NertySoft?</h3>
+          <p class="mt-2 text-sm text-slate-400 leading-relaxed">
+            Realizamos uma conversa rápida pelo WhatsApp ou vídeo para entender a sua necessidade. Em seguida desenhamos o escopo, validamos as telas e iniciamos o desenvolvimento com atualizações constantes até a entrega final.
+          </p>
+        </div>
+
+        <div class="glass-card rounded-2xl p-6 reveal-item">
+          <h3 class="text-base font-heading font-bold text-white">O código-fonte e o sistema pertencem à minha empresa?</h3>
+          <p class="mt-2 text-sm text-slate-400 leading-relaxed">
+            Sim! O sistema desenvolvido para o seu projeto é de propriedade total da sua empresa, sem taxas ocultas de cancelamento ou aprisionamento tecnológico.
+          </p>
+        </div>
+
+        <div class="glass-card rounded-2xl p-6 reveal-item">
+          <h3 class="text-base font-heading font-bold text-white">Qual é o prazo médio de entrega de um sistema?</h3>
+          <p class="mt-2 text-sm text-slate-400 leading-relaxed">
+            Graças à nossa metodologia ágil e aceleradores com IA, a maioria dos projetos funcionais ou versões iniciais é entregue entre 7 e 20 dias úteis.
+          </p>
+        </div>
+
+        <div class="glass-card rounded-2xl p-6 reveal-item">
+          <h3 class="text-base font-heading font-bold text-white">Vocês prestam suporte após a entrega?</h3>
+          <p class="mt-2 text-sm text-slate-400 leading-relaxed">
+            Sim. Oferecemos planos de suporte contínuo para manter seu software sempre atualizado, com backups seguros e suporte direto pelo WhatsApp com o desenvolvedor.
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="mt-auto py-12 border-t border-white/5 bg-black/60 text-slate-500 text-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row justify-between items-center gap-4">
+      <div class="flex items-center space-x-2">
+        <div class="w-6 h-6 rounded-lg bg-nerty-cyan flex items-center justify-center">
+          <i data-lucide="layers" class="w-3.5 h-3.5 text-slate-950"></i>
+        </div>
+        <span class="font-heading font-bold text-slate-200">NertySoft</span>
+        <span class="text-xs text-slate-600">| Software & Automação Sob Medida</span>
+      </div>
+      <p class="text-xs text-slate-500">© 2026 NertySoft. Todos os direitos reservados.</p>
+    </div>
+  </footer>
+
+  <!-- Scripts Interativos & Animação de Scroll -->
+  <script>
+    // Configure seu número de WhatsApp aqui (DDI + DDD + Número)
+    const SEU_WHATSAPP = "5511999999999"; 
+
+    function runSimulation() {
+      const type = document.querySelector('input[name="sim_type"]:checked').value;
+      const scope = document.querySelector('input[name="sim_scope"]:checked').value;
+      
+      const modules = [];
+      if (document.getElementById('chk_whatsapp').checked) modules.push("WhatsApp Bot / Notificações");
+      if (document.getElementById('chk_pagamento').checked) modules.push("Pagamentos (PIX / Cartão)");
+      if (document.getElementById('chk_permissoes').checked) modules.push("Perfis de Usuários / Permissões");
+      if (document.getElementById('chk_relatorios').checked) modules.push("Relatórios / Dashboards");
+
+      const modulesText = modules.length > 0 ? modules.join(", ") : "A definir no alinhamento";
+
+      const msg = `Olá! Gostaria de conversar sobre um projeto com a NertySoft:\n\n- Tipo de Solução: ${type}\n- Complexidade/Porte: ${scope}\n- Recursos desejados: ${modulesText}\n\nGostaria de agendar um alinhamento para detalharmos os requisitos.`;
+      
+      document.getElementById('btn-sim-whatsapp').href = `https://wa.me/${SEU_WHATSAPP}?text=${encodeURIComponent(msg)}`;
+      document.getElementById('btn-header-cta').href = `https://wa.me/${SEU_WHATSAPP}?text=${encodeURIComponent("Olá! Gostaria de falar sobre um projeto de sistema sob medida com a NertySoft.")}`;
+    }
+
+    // Scroll Reveal Observer
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('active');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.addEventListener('DOMContentLoaded', () => {
+      runSimulation();
+      lucide.createIcons();
+      document.querySelectorAll('.reveal-item').forEach(el => observer.observe(el));
+    });
+  </script>
+</body>
+</html>

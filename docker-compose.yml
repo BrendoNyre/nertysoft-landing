@@ -1,0 +1,17 @@
+services:
+  nertysoft_landing:
+    image: nginx:alpine
+    container_name: nertysoft_landing
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:8081:80"
+    volumes:
+      - ./index.html:/usr/share/nginx/html/index.html:ro
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
+    networks:
+      - nerty_network
+
+networks:
+  nerty_network:
+    name: nerty_store_financeiro_network
+    external: true
