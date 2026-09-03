@@ -6,6 +6,25 @@
   <meta name="theme-color" content="#080b10">
   <title>NertySoft | Desenvolvimento de Software e Sistemas Sob Medida</title>
   <meta name="description" content="NertySoft — Desenvolvimento de software, plataformas web, sistemas de gestão e soluções sob medida para sua empresa. Do escopo à implantação completa.">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%233df2e0' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polygon points='12 2 2 7 12 12 22 7 12 2'/><polyline points='2 17 12 22 22 17'/><polyline points='2 12 12 17 22 12'/></svg>">
+
+  <!-- Limpeza proativa de Service Workers e Caches residuais de outros sistemas no mesmo domínio -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.getRegistrations().then(function(registrations) {
+        for (let r of registrations) {
+          r.unregister();
+        }
+      });
+    }
+    if ('caches' in window) {
+      caches.keys().then(function(names) {
+        for (let name of names) {
+          caches.delete(name);
+        }
+      });
+    }
+  </script>
 
   <!-- Google Fonts: Sora, Plus Jakarta Sans & JetBrains Mono -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
