@@ -9,6 +9,7 @@ services:
       - ./index.html:/usr/share/nginx/html/index.html:ro
       - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
       - ./sw.js:/usr/share/nginx/html/sw.js:ro
+      - ./assets:/usr/share/nginx/html/assets:ro
     networks:
       - nerty_network
 
